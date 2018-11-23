@@ -1,0 +1,29 @@
+{
+  "name": "performance-talk-minsait",
+  "version": "1.0.0",
+  "description": "Code to show speed differences between functions",
+  "main": "index.js",
+  "scripts": {
+    "test-1": "node ./1-class-vs-prototype.js",
+    "test-2": "node ./2-template-literals-vs-concat.js",
+    "test-3": "node ./3-destructuring-vs-no-destructuring.js",
+    "test-4": "node ./4-es6-default-params-vs-es5-default-params.js",
+    "test-5": "node ./5-spread-vs-concat-vs-push.js",
+    "test-6": "node ./6-map-vs-map-by-hand.js",
+    "test-7": "node ./7-classic-function-vs-arrow-binded.js",
+    "test-8": "node ./8-reduce-vs-reduce-by-hand.js",
+    "test-9": "node ./9-object-vs-assing-oldcopy.js",
+    "test-10": "node ./10-filter-vs-filter-by-hand.js",
+    "test-11": "node ./11-foreach-vs-for-vs-for-length-cached.js"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "performance"
+  ],
+  "author": "Fran Linde Blázquez",
+  "license": "ISC",
+  "devDependencies": {
+    "bench": "^0.3.6"
+  }
+}

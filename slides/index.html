@@ -1,0 +1,424 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.5.7/core.js"></script> -->
+
+	<title>ECMAScript: Soporte actual, desarrollos cross-browser y rendimiento</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- custom css -->
+	<link rel="stylesheet" href="css/custom.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h2>ECMAScript</h2>
+				<h4>Soporte actual, desarrollos cross-browser y rendimiento</h4>
+				<p>
+					<small>By <a href="https://www.linkedin.com/in/fran-linde-blazquez/" target="_blank">Fran Linde Blázquez</a></small>
+				</p>
+			</section>
+
+			<section>
+				<h2>¿Quién soy?</h2>
+				<p class="fragment">Fran Linde Blázquez</p>
+				<p class="fragment">Ingeniero de Software</p>
+				<p class="fragment">Desarrollador Webs/Apps desde 2013</p>
+				<p class="fragment">Desarrollador Front-End en <a href="https://minsait.com">Minsait</a> desde 2016</p>
+			</section>
+
+			<section>
+				<h2>¿Qué vamos a ver?</h2>
+				<p class="fragment">1. ECMAScript</p>
+				<p class="fragment">2. Algunas novedades de ES6/ES7/ES8</p>
+				<p class="fragment">3. ECMAScript & Cross Browser</p>
+				<p class="fragment">4. Herramientas de Benchmarking</p>
+				<p class="fragment">5. Comparativas de código</p>
+				<p class="fragment">6. Conclusiones</p>
+			</section>
+
+			<section>
+				<h3>1. ECMAScript</h3>
+			</section>
+
+			<section>
+				<p>¿Qué es ECMAScript?</p>
+				<p class="fragment">Estándar de ECMA International (algo así como ISO)</p>
+				<p class="fragment">TC39: comité que lo regula</p>
+				<p class="fragment">Formado por Mozilla, Apple, Google, Facebook...</p>
+				<p class="fragment">Siguen un <a href="https://tc39.github.io/process-document/" target="_blank">proceso</a></p>
+				<p class="fragment">Decimos que es el estándar de JavaScript</p>
+				<p class="fragment">También de ActionScript (Flash) y JScript (Netscape)</p>
+			</section>
+
+			<section>
+				<p>¿ES6? ¿ES2015?</p>
+				<img class="fragment img-medium" src="img/ecmascript-names-table.png" alt="">
+				<p class="fragment">ESNext es la próxima versión: ES2019 (ES10)</p>
+			</section>
+
+			<section>
+				<h3>2.1 Algunas novedades de ES6</h3>
+			</section>
+
+			<section>
+				<h3>Class</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					class Poligono {
+					  constructor(height, width) {
+					    this.height = height;
+					    this.width = width;
+					  }
+
+					  get area() {
+					    return this.calcArea();
+					  }
+
+					  calcArea() {
+					    return this.height * this.width;
+					  }
+					}
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Template Strings / Literals</h3>
+				<p>Cadenas multi-línea:</p>
+				<pre><code data-trim class="javascript">
+					console.log(`text line 1
+					text line 2
+					and the last text line`);
+				</code></pre>
+				<p>Interpolación de valores:</p>
+				<pre><code data-trim class="javascript">
+					let a = 5;
+					let b = 10;
+					console.log(`Fifteen is ${a + b}.`);
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Destructuring</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					let miArray = ["uno", "dos", "tres"];
+
+					// sin destructuring
+					let var1 = miArray[0];
+					let var2 = miArray[1];
+					let var3 = miArray[2];
+
+					// con destructuring
+					let [var1, var2, tres] = miArray;
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Parámetros por defecto</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					function multiplicar(a, b = 1) {
+					  return a*b;
+					}
+
+					multiplicar(5);
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Spread</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					var partes = ['hombros', 'rodillas'];
+					var persona = ['cabeza', ...partes, 'pies'];
+				</code></pre>
+				<p>Ejemplo 2:</p>
+				<pre><code data-trim class="javascript">
+					let arr1 = [0, 1, 2];
+					let arr2 = [3, 4, 5];
+					arr1.push(...arr2);
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Arrow Functions</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					let operacion = (x, y) => {
+					  let aux = x + y;
+					  aux = aux*8.45;
+					  return aux;
+					}
+				</code></pre>
+				<p>Ejemplo 2:</p>
+				<pre><code data-trim class="javascript">
+					let duplica = (x) => 2*x;
+				</code></pre>
+				<p>Ejemplo 3:</p>
+				<pre><code data-trim class="javascript">
+					setTimeout(() => console.log('Hola'), 1000));
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Object.assign</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					var o1 = { a: 1 };
+					var o2 = { b: 2 };
+					var o3 = { c: 3 };
+
+					var obj = Object.assign(o1, o2, o3);
+				</code></pre>
+
+				<p>Ejemplo 2:</p>
+				<pre><code data-trim class="javascript">
+					var o1 = { a: 1, b: 1, c: 1 };
+					var o2 = { b: 2, c: 2 };
+					var o3 = { c: 3 };
+
+					var obj = Object.assign({}, o1, o2, o3);
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Promise</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					var promise1 = new Promise(function(resolve, reject) {
+					  setTimeout(function() {
+					    resolve('foo');
+					  }, 300);
+					});
+
+					promise1.then(function(value) {
+					  console.log(value);
+					  // expected output: "foo"
+					});
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>2.2 Algunas novedades de ES7</h3>
+			</section>
+
+			<section>
+				<h3>Array.prototype.includes()</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					let numbers = [1, 2, 3, 4];
+
+					if(numbers.includes(2)) {
+					  console.log('Array contains value');
+					}
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Potencias</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					let base = 3;
+					let exponent = 4;
+					let result = base**exponent;
+					console.log(result); //81
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>2.3 Algunas novedades de ES8</h3>
+			</section>
+
+			<section>
+				<h3>Async / Await</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					async function fetchData(url) {
+					  try {
+					   let request = await fetch(url);
+					   let text = await request.text();
+					   return JSON.parse(text);
+					  }
+					  catch (err) {
+					    console.log(`Error: ${err.stack}`);
+					  }
+					}
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Trailing commas</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					const trailCommaFn = function(
+					  param1,
+					  param2,
+					  param3,
+					  param4,
+					) {
+					  // do something in function body
+					  console.log(param1 + param2);
+					}
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>Object.values / Object.entries</h3>
+				<p>Ejemplo:</p>
+				<pre><code data-trim class="javascript">
+					Object.entries({ foo: 1, bar: 2 })
+					// [['foo', 1], ['bar', 2]]
+				</code></pre>
+
+				<p>Ejemplo 2:</p>
+				<pre><code data-trim class="javascript">
+					Object.values({ foo: 1, bar: 2 })
+					// [1, 2]
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>3. ECMAScript & Cross Browser</h3>
+			</section>
+
+			<section>
+				<p>Algunos problemillas:</p>
+				<p class="fragment">Llega poco a poco a los navegadores</p>
+				<p class="fragment">Estado actual en formato <a href="https://kangax.github.io/compat-table/es6/" target="_blank">Tabla</a></p>
+			</section>
+
+			<section>
+				<p>¿Cómo lidiamos con esto?</p>
+				<p class="fragment">Babel <a href="https://babeljs.io/" target="_blank">Web Oficial</a></p>
+				<p class="fragment">Transpilador. Reescribe código JavaScript usando estándares anteriores.</p>
+				<p class="fragment">Paso 1: Transpilación</p>
+				<p class="fragment">Paso 2: Polyfills (basado en <a target="_blank" href="https://github.com/zloirock/core-js">core-js</a>)</p>
+				<p class="fragment">Otro Polyfill interesante: <a target="_blank" href="https://polyfill.io/">polyfill.io</a></p>
+			</section>
+
+			<section>
+				<p>¿Qué es transpilable y qué no?</p>
+				<img class="fragment img-small" src="img/tabla-polyfill-transpilado-nada.png" alt="">
+			</section>
+
+			<section>
+				<p>Una buena regla:</p>
+				<p class="fragment">Si es nueva sintáxis: transpilar</p>
+				<p class="fragment">Si es nuevo objecto/método: poylfill</p>
+				<p class="fragment">Si es nueva API: estás muerto :)</p>
+			</section>
+
+			<section>
+				<h3>3. Herramientas de Benchmarking</h3>
+			</section>
+
+			<section>
+				<p>Chrome DevTools.<span class="fragment"> Chrome only ¯\_(ツ)_/¯</span></p>
+				<p class="fragment">Librerías como <a href="https://github.com/bestiejs/benchmark.js/" target="_blank">benchmarkjs</a> usada en <a href="https://jsperf.com/">jsPerf.com</a></p>
+				<p class="fragment">performance.now()</p>
+				<pre class="fragment"><code data-trim class="javascript">
+					var t0 = performance.now();
+					hacerAlgo();
+					var t1 = performance.now();
+					console.log("hacerAlgo ha tardado " + (t1 - t0) + " ms.");
+				</code></pre>
+				<p class="fragment">console.time() y console.timeEnd()</p>
+				<pre class="fragment"><code data-trim class="javascript">
+					console.time('test');
+					let acum = 0;
+					for(let i=0; i<9999999; i++){
+					  acum++;
+					}
+					console.timeEnd('test');
+				</code></pre>
+			</section>
+
+			<section>
+				<h3>4. Comparativas de código</h3>
+				<p class="fragment">Se enviará enlace al repositorio</p>
+			</section>
+
+			<section>
+				<h3>5. Conclusiones</h3>
+			</section>
+
+			<section>
+				<h3>Conclusiones:</h3>
+				<p class="fragment">No todos los navegadores implementan todo ES</p>
+				<p class="fragment">Cada navegador usa un motor JS diferente</p>
+				<p class="fragment">Babel transpila SIEMPRE lo que no es 'polyficable'</p>
+				<p class="fragment">Los polyfills son func. grandes pero eficientes</p>
+			</section>
+
+			<section>
+				<h3>Consejos:</h3>
+				<p class="fragment">Debemos preguntar SIEMPRE navegadores soportados</p>
+				<p class="fragment">Usa JS moderno y aplica transpilador/polyfills</p>
+				<p class="fragment">Cuidado con los polyfills que elegimos</p>
+			</section>
+
+			<section>
+				<h3>¿Dudas?</h3>
+			</section>
+
+			<section>
+				<h2 class="thankyou">Gracias :)</h2>
+				<img class="img-logo" src="img/logo-meetup.svg" alt="">
+				<img class="img-logo" src="img/minsait-blanco.png" alt="">
+				<img class="img-logo" src="img/logo-upgradehub-blanco.svg" alt="">
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			dependencies: [{
+					src: 'plugin/markdown/marked.js'
+				},
+				{
+					src: 'plugin/markdown/markdown.js'
+				},
+				{
+					src: 'plugin/notes/notes.js',
+					async: true
+				},
+				{
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function() {
+						hljs.initHighlightingOnLoad();
+					}
+				},
+			]
+		});
+	</script>
+</body>
+
+</html>
