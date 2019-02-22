@@ -1,5 +1,9 @@
 # ECMAScript: Soporte actual, desarrollos cross-browser y rendimiento
 
+### Autor del Meetup
+
+Fran Linde Blázquez
+
 ### Video
 
 Puedes encontrar el video de la charla en <https://www.youtube.com/watch?v=dV64aBZRV4s/>
